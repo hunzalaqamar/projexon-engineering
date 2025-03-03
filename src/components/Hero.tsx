@@ -2,10 +2,10 @@ import React from "react";
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative w-full bg-[#1C1C1C] text-white overflow-hidden">
+    <section className="relative w-full bg-gray-100 text-black overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-4 py-16 md:py-32">
         <div className="mt-8 md:mt-0 md:w-1/2">
-          <p className="text-orange-400 uppercase text-sm tracking-widest mb-2">
+          <p className="text-orange-600 uppercase text-sm tracking-widest mb-2">
             Empowering your industry with cutting-edge solutions, breathing new
             life into every machine.
           </p>
@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
             <br className="hidden md:block" />
             for a Brighter Industrial Future
           </h1>
-          <p className="text-gray-300 text-base md:text-lg mb-6 max-w-lg">
+          <p className="text-[#2b49a1] text-base md:text-lg mb-6 max-w-lg">
             Picture a future where every machine anticipates your next
             move—seamlessly adapting, optimizing resources, and propelling your
             operations to new heights.

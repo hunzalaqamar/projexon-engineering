@@ -2,8 +2,9 @@ import Hero from "./Hero";
 import AboutSection from "./AboutSection";
 import ProductsSection from "./ProductsSection";
 import WhyDifferent from "./WhyDifferent";
-import Testimonials from "./Testimonials";
 import ContactForm from "./ContactForm";
+import CustomerFeedbackSection from "./CustomerFeedbackSection";
+import EsteemedClientsSection from "./EsteemedClientsSection";
 
 function Home() {
   return (
@@ -16,7 +17,8 @@ function Home() {
       </section>
       <ProductsSection />
       <WhyDifferent />
-      <Testimonials />
+      <CustomerFeedbackSection />
+      <EsteemedClientsSection />
       <section id="contact-us">
         <ContactForm />
       </section>

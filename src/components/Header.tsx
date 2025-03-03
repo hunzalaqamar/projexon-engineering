@@ -40,22 +40,22 @@ const Header: React.FC<HeaderProps> = () => {
             onClick={() => navigate("/")}
           >
             <img
-              src="/assets/peslogo.png"
+              src="/assets/peslogonobg.png"
               alt="Pes Logo"
               className="h-14 w-auto"
             />
             <div className="ml-2 flex flex-col lg:flex-row">
-              <span className="text-[#0fbbea] text-xl lg:text-3xl font-bold">
+              <span className="text-[#2b49a1] text-xl lg:text-3xl font-bold">
                 Projexon
               </span>
-              <span className="text-xl text-white lg:text-3xl font-bold lg:ml-1">
+              <span className="text-xl text-black lg:text-3xl font-bold lg:ml-1">
                 Engineering
               </span>
             </div>
           </div>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex space-x-6 text-white font-medium">
+          <ul className="hidden md:flex space-x-6 text-black font-medium">
             <li className="hover:text-[#0fbbea] transition-colors">
               <a href="#home">Home</a>
             </li>
@@ -127,18 +127,18 @@ const Header: React.FC<HeaderProps> = () => {
           <div className="flex items-center space-x-4">
             <a
               href="#contact-us"
-              className="hidden md:inline-block bg-[#0fbbea] text-white px-4 py-2 rounded hover:bg-[#0ea0c8] transition-colors"
+              className="hidden md:inline-block bg-[#0fbbea] text-black px-4 py-2 rounded hover:bg-[#0ea0c8] transition-colors"
             >
               Let's Talk
             </a>
             <a
               href="#contact-us"
-              className="md:hidden bg-[#0fbbea] text-white px-3 py-2 rounded hover:bg-[#0ea0c8] transition-colors"
+              className="md:hidden bg-[#0fbbea] text-black px-3 py-2 rounded hover:bg-[#0ea0c8] transition-colors"
             >
               Let's Talk
             </a>
             <button
-              className="text-white text-2xl md:hidden rounded-lg"
+              className="text-black text-2xl md:hidden rounded-lg"
               onClick={toggleNav}
               aria-label="Toggle Navigation"
             >
