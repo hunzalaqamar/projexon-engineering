@@ -4,7 +4,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// Manually add your client logos here (replace with actual URLs or local image paths)
 const clientLogos = [
   "/assets/dawnbread.png",
   "/assets/nipponpaint.png",
@@ -16,14 +15,32 @@ const clientLogos = [
   "/assets/gloriajeans.png",
   "/assets/rajasahib.png",
   "/assets/indushospital.png",
+  "/assets/unilever.png",
+  "/assets/mezanbev.png",
+  "/assets/pmi.png",
+  "/assets/ghani.png",
+  "/assets/fcep.png",
+  "/assets/pabc.png",
+  "/assets/gadoon.png",
+  "/assets/sg.png",
+  "/assets/lottee.png",
+  "/assets/cn.svg",
+  "/assets/cnp.png",
+  "/assets/mf.png",
+  "/assets/hbpep.png",
+  "/assets/ontex.png",
+  "/assets/haleeb.png",
+  "/assets/treet.png",
+  "/assets/fc.png",
+  "/assets/pj.png",
 ];
 
 const EsteemedClientsSection: React.FC = () => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 5000, // Slower speed for a smooth slide
-    slidesToShow: 4,
+    speed: 2000, // Slower speed for a smooth slide
+    slidesToShow: 8,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 0, // Continuous slide
@@ -69,16 +86,11 @@ const EsteemedClientsSection: React.FC = () => {
         <div className="overflow-hidden">
           <Slider {...settings}>
             {clientLogos.map((logo, index) => (
-              <div
-                key={index}
-                className="px-2 flex justify-center items-center"
-              >
-                {" "}
-                {/* Reduced from px-4 to px-2 */}
+              <div key={index} className="p-2 flex justify-center items-center">
                 <img
                   src={logo}
                   alt={`Client Logo ${index + 1}`}
-                  className="max-h-20 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity duration-300"
+                  className="h-16 w-auto object-contain md:h-20 lg:h-24"
                 />
               </div>
             ))}

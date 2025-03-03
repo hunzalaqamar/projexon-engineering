@@ -7,138 +7,206 @@ interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
   const [navOpen, setNavOpen] = useState(false);
-  const [productsOpen, setProductsOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const hideTimer = useRef<number | null>(null);
   const navigate = useNavigate();
 
   const toggleNav = () => setNavOpen(!navOpen);
 
-  const handleProductsMouseEnter = () => {
+  const handleMouseEnter = (dropdown: string) => {
     if (hideTimer.current) {
       clearTimeout(hideTimer.current);
       hideTimer.current = null;
     }
-    setProductsOpen(true);
+    setActiveDropdown(dropdown);
   };
 
-  const handleProductsMouseLeave = () => {
+  const handleMouseLeave = (dropdown: string) => {
     hideTimer.current = window.setTimeout(() => {
-      setProductsOpen(false);
+      if (activeDropdown === dropdown) {
+        setActiveDropdown(null);
+      }
       hideTimer.current = null;
-    }, 50);
+    }, 100);
   };
 
-  const toggleProducts = () => setProductsOpen(!productsOpen);
+  const toggleDropdown = (dropdown: string) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  };
+
+  const handleNavigation = (path: string) => {
+    if (path.startsWith("http")) {
+      window.open(path, "_blank"); // Open external links (Products) in a new tab
+    } else {
+      navigate(path); // Use navigate for internal React Router paths
+      if (navOpen) {
+        setNavOpen(false); // Close mobile menu after navigation
+      }
+    }
+  };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
-      <div className="backdrop-blur-sm bg-transparent">
-        <nav className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <header className="fixed top-0 left-0 w-full z-50 ">
+      <div className="bg-white ml-5 mr-5 lg:ml-36 lg:mr-36 rounded-bl-2xl rounded-br-2xl border-2 border-gray-300 shadow-lg">
+        <nav className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
           {/* Logo / Brand */}
           <div
             className="flex-shrink-0 flex items-center cursor-pointer"
-            onClick={() => navigate("/")}
+            onClick={() => handleNavigation("/")}
           >
             <img
               src="/assets/peslogonobg.png"
               alt="Pes Logo"
-              className="h-14 w-auto"
+              className="h-10 lg:h-14 w-auto"
             />
-            <div className="ml-2 flex flex-col lg:flex-row">
-              <span className="text-[#2b49a1] text-xl lg:text-3xl font-bold">
+            <div className="ml-2 flex flex-row ">
+              <span className="text-[#2b49a1] text-lg lg:text-3xl font-bold leading-tight tracking-tight ">
                 Projexon
               </span>
-              <span className="text-xl text-black lg:text-3xl font-bold lg:ml-1">
+              <span className="text-lg ml-1 text-black lg:text-3xl font-bold leading-tight tracking-tight ">
                 Engineering
               </span>
             </div>
           </div>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex space-x-6 text-black font-medium">
-            <li className="hover:text-[#0fbbea] transition-colors">
-              <a href="#home">Home</a>
+          <ul className="hidden lg:flex space-x-6 text-black font-medium">
+            <li
+              className="hover:text-[#0fbbea] transition-colors cursor-pointer"
+              onClick={() => handleNavigation("/")}
+            >
+              <span>Home</span>
             </li>
             <li
               className="relative hover:text-[#0fbbea] transition-colors cursor-pointer"
-              onMouseEnter={handleProductsMouseEnter}
-              onMouseLeave={handleProductsMouseLeave}
+              onMouseEnter={() => handleMouseEnter("products")}
+              onMouseLeave={() => handleMouseLeave("products")}
             >
               <span>Products</span>
-              {productsOpen && (
+              {activeDropdown === "products" && (
                 <ul className="absolute top-8 left-0 bg-white text-black rounded shadow py-2 w-52">
-                  <li className="px-4 py-2 hover:bg-gray-100">
-                    <a
-                      href="https://www.macvalves.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      MAC Valves
-                    </a>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() =>
+                      handleNavigation("https://www.macvalves.com/")
+                    }
+                  >
+                    MAC Valves
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100">
-                    <a
-                      href="https://makpower.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      MAK Power
-                    </a>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("https://makpower.com/")}
+                  >
+                    MAK Power
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100">
-                    <a
-                      href="https://www.pisco.co.jp/en/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      PISCO Pneumatics
-                    </a>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() =>
+                      handleNavigation("https://www.pisco.co.jp/en/")
+                    }
+                  >
+                    PISCO Pneumatics
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100">
-                    <a
-                      href="https://www.simphoenix.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Sympheonix
-                    </a>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() =>
+                      handleNavigation("https://www.simphoenix.com/")
+                    }
+                  >
+                    Sympheonix
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100">
-                    <a
-                      href="https://www.vpinstruments.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      VP Instruments
-                    </a>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() =>
+                      handleNavigation("https://www.vpinstruments.com/")
+                    }
+                  >
+                    VP Instruments
                   </li>
                 </ul>
               )}
             </li>
-            <li className="hover:text-[#0fbbea] transition-colors">
-              <a href="#about-us">About Us</a>
+            <li
+              className="relative hover:text-[#0fbbea] transition-colors cursor-pointer"
+              onMouseEnter={() => handleMouseEnter("careers")}
+              onMouseLeave={() => handleMouseLeave("careers")}
+            >
+              <span>Careers</span>
+              {activeDropdown === "careers" && (
+                <ul className="absolute top-8 left-0 bg-white text-black rounded shadow py-2 w-52">
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/apply-for-internship")}
+                  >
+                    Apply for Internship
+                  </li>
+                </ul>
+              )}
             </li>
-            <li className="hover:text-[#0fbbea] transition-colors">
-              <a href="#contact-us">Contact Us</a>
+            <li
+              className="relative hover:text-[#0fbbea] transition-colors cursor-pointer"
+              onMouseEnter={() => handleMouseEnter("industries")}
+              onMouseLeave={() => handleMouseLeave("industries")}
+            >
+              <span>Industries</span>
+              {activeDropdown === "industries" && (
+                <ul className="absolute top-8 left-0 bg-white text-black rounded shadow py-2 w-52">
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/oil-and-gas")}
+                  >
+                    Oil & Gas
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/textile")}
+                  >
+                    Textile
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/food-and-beverage")}
+                  >
+                    Food & Beverage
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/pharmaceutical")}
+                  >
+                    Pharmaceutical
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/chemical-industries")}
+                  >
+                    Chemical Industries
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/power-industries")}
+                  >
+                    Power Industries
+                  </li>
+                </ul>
+              )}
+            </li>
+            <li
+              className="hover:text-[#0fbbea] transition-colors cursor-pointer"
+              onClick={() => handleNavigation("/contact-us")}
+            >
+              <span>Contact Us</span>
             </li>
           </ul>
 
-          {/* Right: Let's Talk + Mobile Menu Toggle */}
           <div className="flex items-center space-x-4">
-            <a
-              href="#contact-us"
-              className="hidden md:inline-block bg-[#0fbbea] text-black px-4 py-2 rounded hover:bg-[#0ea0c8] transition-colors"
-            >
-              Let's Talk
-            </a>
-            <a
-              href="#contact-us"
-              className="md:hidden bg-[#0fbbea] text-black px-3 py-2 rounded hover:bg-[#0ea0c8] transition-colors"
-            >
-              Let's Talk
-            </a>
             <button
-              className="text-black text-2xl md:hidden rounded-lg"
+              className="hidden md:inline-block bg-[#0fbbea] text-black px-4 py-2 rounded hover:bg-[#0ea0c8] transition-colors cursor-pointer"
+              onClick={() => handleNavigation("/contact-us")}
+            >
+              Let's Talk
+            </button>
+            <button
+              className="text-black text-2xl lg:hidden rounded-lg"
               onClick={toggleNav}
               aria-label="Toggle Navigation"
             >
@@ -148,85 +216,138 @@ const Header: React.FC<HeaderProps> = () => {
         </nav>
 
         {navOpen && (
-          <div className="md:hidden bg-white text-black">
+          <div className="lg:hidden bg-white text-black">
             <ul className="flex flex-col space-y-4 p-4">
-              <li className="hover:text-[#0fbbea] transition-colors">
-                <a href="#home" onClick={toggleNav}>
-                  Home
-                </a>
+              <li
+                className="hover:text-[#0fbbea] transition-colors cursor-pointer"
+                onClick={() => handleNavigation("/")}
+              >
+                <span>Home</span>
               </li>
               <li>
                 <button
                   className="flex items-center justify-between w-full hover:text-[#0fbbea] transition-colors"
-                  onClick={toggleProducts}
+                  onClick={() => toggleDropdown("products")}
                 >
                   <span>Products</span>
                   <FiChevronDown className="ml-2" />
                 </button>
-                {productsOpen && (
+                {activeDropdown === "products" && (
                   <ul className="mt-2 py-2 w-full">
-                    <li className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea]">
-                      <a
-                        href="https://www.macvalves.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={toggleNav}
-                      >
-                        MAC Valves
-                      </a>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation("https://www.macvalves.com/")
+                      }
+                    >
+                      MAC Valves
                     </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea]">
-                      <a
-                        href="https://makpower.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={toggleNav}
-                      >
-                        MAK Power
-                      </a>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("https://makpower.com/")}
+                    >
+                      MAK Power
                     </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea]">
-                      <a
-                        href="https://www.pisco.co.jp/en/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={toggleNav}
-                      >
-                        PISCO Pneumatics
-                      </a>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation("https://www.pisco.co.jp/en/")
+                      }
+                    >
+                      PISCO Pneumatics
                     </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea]">
-                      <a
-                        href="https://www.simphoenix.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={toggleNav}
-                      >
-                        Sympheonix
-                      </a>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation("https://www.simphoenix.com/")
+                      }
+                    >
+                      Sympheonix
                     </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea]">
-                      <a
-                        href="https://www.vpinstruments.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={toggleNav}
-                      >
-                        VP Instruments
-                      </a>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation("https://www.vpinstruments.com/")
+                      }
+                    >
+                      VP Instruments
                     </li>
                   </ul>
                 )}
               </li>
-              <li className="hover:text-[#0fbbea] transition-colors">
-                <a href="#about-us" onClick={toggleNav}>
-                  About Us
-                </a>
+              <li>
+                <button
+                  className="flex items-center justify-between w-full hover:text-[#0fbbea] transition-colors"
+                  onClick={() => toggleDropdown("careers")}
+                >
+                  <span>Careers</span>
+                  <FiChevronDown className="ml-2" />
+                </button>
+                {activeDropdown === "careers" && (
+                  <ul className="mt-2 py-2 w-full">
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/apply-for-internship")}
+                    >
+                      Apply for Internship
+                    </li>
+                  </ul>
+                )}
               </li>
-              <li className="hover:text-[#0fbbea] transition-colors">
-                <a href="#contact-us" onClick={toggleNav}>
-                  Contact Us
-                </a>
+              <li>
+                <button
+                  className="flex items-center justify-between w-full hover:text-[#0fbbea] transition-colors"
+                  onClick={() => toggleDropdown("industries")}
+                >
+                  <span>Industries</span>
+                  <FiChevronDown className="ml-2" />
+                </button>
+                {activeDropdown === "industries" && (
+                  <ul className="mt-2 py-2 w-full">
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/oil-and-gas")}
+                    >
+                      Oil & Gas
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/textile")}
+                    >
+                      Textile
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/food-and-beverage")}
+                    >
+                      Food & Beverage
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/pharmaceutical")}
+                    >
+                      Pharmaceutical
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/chemical-industries")}
+                    >
+                      Chemical Industries
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/power-industries")}
+                    >
+                      Power Industries
+                    </li>
+                  </ul>
+                )}
+              </li>
+              <li
+                className="hover:text-[#0fbbea] transition-colors cursor-pointer"
+                onClick={() => handleNavigation("/contact-us")}
+              >
+                <span>Contact Us</span>
               </li>
             </ul>
           </div>
