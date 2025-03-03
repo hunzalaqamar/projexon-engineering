@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import { FaWhatsapp, FaPhoneAlt, FaPaperPlane } from "react-icons/fa";
 
 const ContactForm: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <section className="bg-[#1B3B47] text-white py-16 px-4 min-h-[100px]">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">

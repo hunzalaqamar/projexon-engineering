@@ -1,6 +1,8 @@
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Footer: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <footer className="relative bg-black text-white py-16 px-4 overflow-hidden">
       {/* Accent Shapes */}
@@ -74,35 +76,35 @@ const Footer: React.FC = () => {
             </ul>
           </div>
         </div>
-
-        {/* Bottom Row */}
         <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-400 border-t border-gray-700 pt-4">
           <p>© 2025 Projexon Engineering. All rights reserved.</p>
           <div className="flex space-x-4 mt-2 md:mt-0">
             <a
-              href="/privacy-policy"
-              className="hover:text-white transition-colors"
+              onClick={() => navigate("/privacy-policy")}
+              className="hover:text-white transition-colors cursor-pointer"
             >
               Privacy Policy
             </a>
             <span>|</span>
             <a
-              href="/terms-of-use"
-              className="hover:text-white transition-colors"
+              onClick={() => navigate("/terms-of-use")}
+              className="hover:text-white transition-colors cursor-pointer"
             >
               Terms of Use
             </a>
           </div>
           <div className="flex space-x-4 mt-2 md:mt-0">
             <a
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors"
+              onClick={() => navigate("#")}
+              className="text-gray-400 hover:text-white transition-colors cursor-pointer"
             >
               <FaFacebookF />
             </a>
             <a
-              href="https://wa.me/+923004100604"
-              className="text-gray-400 hover:text-white transition-colors"
+              onClick={() =>
+                window.open("https://wa.me/+923004100604", "_blank")
+              }
+              className="text-gray-400 hover:text-white transition-colors cursor-pointer"
             >
               <FaWhatsapp />
             </a>

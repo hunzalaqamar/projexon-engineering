@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // For animations
 
@@ -60,6 +60,10 @@ const InternshipForm: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <div className="min-h-screen mt-20 flex items-center justify-center py-12 px-4 overflow-hidden">

@@ -1,4 +1,3 @@
-// src/components/EsteemedClientsSection.tsx
 import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -39,32 +38,32 @@ const EsteemedClientsSection: React.FC = () => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 2000, // Slower speed for a smooth slide
+    speed: 2000,
     slidesToShow: 8,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 0, // Continuous slide
-    cssEase: "linear", // Smooth, continuous motion
+    autoplaySpeed: 0,
+    cssEase: "linear",
     arrows: false,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 5,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 4,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },

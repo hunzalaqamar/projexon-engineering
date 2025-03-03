@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion"; // For animations (install with `npm install framer-motion`)
 import { FaWhatsapp, FaPhoneAlt, FaPaperPlane } from "react-icons/fa";
 
 const ContactUs: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <section className="relative w-full min-h-screen overflow-hidden lg:mt-28 pb-52">
       <header

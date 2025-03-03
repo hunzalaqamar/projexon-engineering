@@ -5,8 +5,13 @@ import WhyDifferent from "./WhyDifferent";
 import ContactForm from "./ContactForm";
 import CustomerFeedbackSection from "./CustomerFeedbackSection";
 import EsteemedClientsSection from "./EsteemedClientsSection";
+import { useEffect } from "react";
 
 function Home() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <>
       <section id="home">
