@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // For animations
+import emailjs from "@emailjs/browser"; // For EmailJS
 
 const Internship: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,15 +12,13 @@ const Internship: React.FC = () => {
     address: "",
     internshipDepartment: "",
     gender: "",
-    university: "",
-    cgpa: "",
-    semester: "",
-    cv: null as File | null,
+    cvLink: "", // Matches {{cvLink}} in template
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isChecked, setIsChecked] = useState(false);
+  const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleChange = (
@@ -29,12 +28,6 @@ const Internship: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ ...prev, cv: e.target.files![0] }));
-    }
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,15 +40,62 @@ const Internship: React.FC = () => {
       setError("Please confirm that you accept terms and conditions.");
       return;
     }
+    if (!formData.cvLink) {
+      setError("Please provide a Google Drive link for your CV.");
+      return;
+    }
+    const isValidGoogleDriveLink = formData.cvLink.includes("drive.google.com");
+    if (!isValidGoogleDriveLink) {
+      setError("Please provide a valid Google Drive link.");
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
+    setSuccess(null);
 
     try {
-      console.log("Form submitted:", formData);
-      alert("Application submitted successfully!");
-      navigate("/"); // Redirect to home after submission
+      const result = await emailjs.send(
+        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID!,
+        import.meta.env.VITE_APP_EMAILJS_INTERNSHIP_TEMPLATE_ID!,
+        {
+          from_name: formData.name, // Matches {{from_name}} - applicant's name
+          to_name: "Projexon Team", // Matches {{to_name}} - hardcoded recipient name (adjust as needed)
+          name: formData.name, // Matches {{name}}
+          email: formData.email, // Matches {{email}}
+          mobile: formData.mobile, // Matches {{mobile}}
+          cnic: formData.cnic, // Matches {{cnic}}
+          address: formData.address || "Not provided", // Matches {{address}}
+          internshipDepartment: formData.internshipDepartment, // Matches {{internshipDepartment}}
+          gender: formData.gender, // Matches {{gender}}
+          cvLink: formData.cvLink, // Matches {{cvLink}}
+          to_email: "internships@projexon.com", // Replace with actual company email
+        },
+        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY!
+      );
+
+      if (result.text === "OK") {
+        setSuccess("Application submitted successfully! We'll review it soon.");
+        setFormData({
+          name: "",
+          email: "",
+          mobile: "",
+          cnic: "",
+          address: "",
+          internshipDepartment: "",
+          gender: "",
+          cvLink: "",
+        });
+        navigate("/");
+      } else {
+        throw new Error("Failed to submit the application. Please try again.");
+      }
     } catch (err) {
-      setError("Failed to submit the application. Please try again.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to submit the application. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -77,8 +117,7 @@ const Internship: React.FC = () => {
         <div
           className="absolute inset-0 bg-black bg-opacity-30"
           style={{ opacity: 0.5 }}
-        />{" "}
-        {/* Overlay for readability */}
+        />
       </div>
       <div className="max-w-6xl mx-auto px-6 py-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10 lg:mt-28">
@@ -215,88 +254,34 @@ const Internship: React.FC = () => {
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700">
-                    Address
+                    Address (Optional)
                   </label>
                   <textarea
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
                     className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#0fbbea] focus:border-[#0fbbea] transition-all h-24"
-                    required
-                  />
-                </div>
-              </div>
-
-              <h1 className="text-3xl font-bold text-[#2b49a1] mt-8 mb-6 text-center">
-                Academics
-              </h1>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    University Name
-                  </label>
-                  <input
-                    type="text"
-                    name="university"
-                    value={formData.university}
-                    onChange={handleChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#0fbbea] focus:border-[#0fbbea] transition-all"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    CGPA
-                  </label>
-                  <input
-                    type="number"
-                    name="cgpa"
-                    value={formData.cgpa}
-                    onChange={handleChange}
-                    step="0.01"
-                    min="0"
-                    max="4"
-                    className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#0fbbea] focus:border-[#0fbbea] transition-all"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Semester
-                  </label>
-                  <input
-                    type="number"
-                    name="semester"
-                    value={formData.semester}
-                    onChange={handleChange}
-                    min="1"
-                    className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#0fbbea] focus:border-[#0fbbea] transition-all"
-                    required
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Upload CV
+                  Google Drive CV Link
                 </label>
-                <p className="text-xs text-red-500 mt-1 mb-2">
-                  Note: CV should be in PDF format and less than 50KB.
+                <p className="text-xs text-gray-500 mt-1 mb-2">
+                  Please provide a publicly accessible Google Drive link to your
+                  CV (PDF format).
                 </p>
                 <input
-                  type="file"
-                  name="cv"
-                  onChange={handleFileChange}
+                  type="url"
+                  name="cvLink"
+                  value={formData.cvLink}
+                  onChange={handleChange}
                   className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#0fbbea] focus:border-[#0fbbea] transition-all"
-                  accept=".pdf,.doc,.docx"
+                  placeholder="https://drive.google.com/file/d/..."
                   required
                 />
-                {formData.cv && (
-                  <p className="text-gray-600 mt-1 text-sm">
-                    Selected file: {formData.cv.name}
-                  </p>
-                )}
               </div>
 
               <div className="flex items-center space-x-2 mt-4">
@@ -313,6 +298,11 @@ const Internship: React.FC = () => {
 
               {error && (
                 <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+              )}
+              {success && (
+                <p className="text-green-500 text-sm text-center mt-2">
+                  {success}
+                </p>
               )}
 
               <motion.button
