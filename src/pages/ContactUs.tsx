@@ -1,23 +1,82 @@
-import React, { useEffect } from "react";
-import { motion } from "framer-motion"; // For animations (install with `npm install framer-motion`)
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion"; // For animations
 import { FaWhatsapp, FaPhoneAlt, FaPaperPlane } from "react-icons/fa";
+import emailjs from "@emailjs/browser"; // For EmailJS
 
 const ContactUs: React.FC = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+    setSuccess(null);
+
+    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      setError("Please enter a valid email address.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const result = await emailjs.send(
+        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID!,
+        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID!,
+        {
+          from_name: formData.name,
+          from_email: import.meta.env.VITE_APP_EMAILJS_USER_ID!,
+          message: formData.message,
+          to_email: formData.email,
+        },
+        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY!
+      );
+
+      if (result.text === "OK") {
+        setSuccess("Message sent successfully! We'll get back to you soon.");
+        setFormData({ name: "", email: "", message: "" }); // Reset form
+      } else {
+        throw new Error("Failed to send message. Please try again.");
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to send message. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <section className="relative w-full min-h-screen overflow-hidden lg:mt-28 pb-52">
+    <section className="relative w-full min-h-screen overflow-hidden">
       <header
-        className="relative h-screen bg-cover bg-center"
+        className="relative min-h-screen bg-cover bg-center"
         style={{
           backgroundImage: `url('/assets/contactusbg.jpg')`,
           opacity: 0.9,
         }}
       >
         <div className="max-w-6xl mx-auto px-6 py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:mt-28">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -60,7 +119,7 @@ const ContactUs: React.FC = () => {
               transition={{ duration: 0.8 }}
               className="bg-white rounded-2xl shadow-2xl p-8 text-gray-800"
             >
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label
                     htmlFor="name"
@@ -71,8 +130,12 @@ const ContactUs: React.FC = () => {
                   <input
                     type="text"
                     id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="John Smith"
                     className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#0fbbea] focus:border-[#0fbbea] transition-all"
+                    required
                   />
                 </div>
 
@@ -86,8 +149,12 @@ const ContactUs: React.FC = () => {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="email@domain.com"
                     className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#0fbbea] focus:border-[#0fbbea] transition-all"
+                    required
                   />
                 </div>
 
@@ -100,9 +167,13 @@ const ContactUs: React.FC = () => {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     rows={4}
                     placeholder="Tell us how we can assist you..."
                     className="mt-1 block w-full border border-gray-300 rounded-lg p-3 focus:ring-[#0fbbea] focus:border-[#0fbbea] transition-all"
+                    required
                   ></textarea>
                 </div>
 
@@ -111,10 +182,13 @@ const ContactUs: React.FC = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     type="submit"
-                    className="inline-flex items-center justify-center border border-[#0fbbea] text-[#0fbbea] font-medium py-3 px-6 rounded-lg shadow-md transition-colors hover:bg-[#0fbbea] hover:text-white"
+                    disabled={isSubmitting}
+                    className={`inline-flex items-center justify-center border border-[#0fbbea] text-[#0fbbea] font-medium py-3 px-6 rounded-lg shadow-md transition-colors hover:bg-[#0fbbea] hover:text-white ${
+                      isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   >
                     <FaPaperPlane className="mr-2" />
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </motion.button>
 
                   <motion.a
@@ -139,6 +213,11 @@ const ContactUs: React.FC = () => {
                     Call Us
                   </motion.a>
                 </div>
+
+                {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+                {success && (
+                  <p className="text-green-500 text-sm mt-4">{success}</p>
+                )}
               </form>
             </motion.div>
           </div>

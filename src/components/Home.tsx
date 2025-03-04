@@ -6,6 +6,7 @@ import ContactForm from "./ContactForm";
 import CustomerFeedbackSection from "./CustomerFeedbackSection";
 import EsteemedClientsSection from "./EsteemedClientsSection";
 import { useEffect } from "react";
+import VisionMissionSection from "./VisionMissionSection";
 
 function Home() {
   useEffect(() => {
@@ -19,6 +20,9 @@ function Home() {
       </section>
       <section id="about-us">
         <AboutSection />
+      </section>
+      <section id="vision-mission">
+        <VisionMissionSection />
       </section>
       <ProductsSection />
       <WhyDifferent />

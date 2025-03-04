@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // For animations
 
-const InternshipForm: React.FC = () => {
+const Internship: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -66,7 +66,7 @@ const InternshipForm: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen mt-20 flex items-center justify-center py-12 px-4 overflow-hidden">
+    <div className="relative w-full overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -80,8 +80,8 @@ const InternshipForm: React.FC = () => {
         />{" "}
         {/* Overlay for readability */}
       </div>
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-6xl mx-auto px-6 py-12 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10 lg:mt-28">
           {/* Left Card: General Internship Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -281,6 +281,9 @@ const InternshipForm: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   Upload CV
                 </label>
+                <p className="text-xs text-red-500 mt-1 mb-2">
+                  Note: CV should be in PDF format and less than 50KB.
+                </p>
                 <input
                   type="file"
                   name="cv"
@@ -329,4 +332,4 @@ const InternshipForm: React.FC = () => {
   );
 };
 
-export default InternshipForm;
+export default Internship;

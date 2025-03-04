@@ -36,11 +36,11 @@ const Header: React.FC<HeaderProps> = () => {
 
   const handleNavigation = (path: string) => {
     if (path.startsWith("http")) {
-      window.open(path, "_blank"); // Open external links (Products) in a new tab
+      window.open(path, "_blank");
     } else {
-      navigate(path); // Use navigate for internal React Router paths
+      navigate(path);
       if (navOpen) {
-        setNavOpen(false); // Close mobile menu after navigation
+        setNavOpen(false);
       }
     }
   };
@@ -60,7 +60,7 @@ const Header: React.FC<HeaderProps> = () => {
               className="h-10 lg:h-14 w-auto"
             />
             <div className="ml-2 flex flex-row ">
-              <span className="text-[#2b49a1] text-lg lg:text-3xl font-bold leading-tight tracking-tight ">
+              <span className="text-[#26a9e1] text-lg lg:text-3xl font-bold leading-tight tracking-tight ">
                 Projexon
               </span>
               <span className="text-lg ml-1 text-black lg:text-3xl font-bold leading-tight tracking-tight ">
@@ -122,6 +122,79 @@ const Header: React.FC<HeaderProps> = () => {
                     }
                   >
                     VP Instruments
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() =>
+                      handleNavigation("https://www.siemens.com/global/en.html")
+                    }
+                  >
+                    Siemens PLC Card
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() =>
+                      handleNavigation("https://www.siemens.com/global/en.html")
+                    }
+                  >
+                    Servo Motor/Drive
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("https://www.ab.com/")}
+                  >
+                    Allen Bradley
+                  </li>
+                </ul>
+              )}
+            </li>
+            <li
+              className="relative hover:text-[#0fbbea] transition-colors cursor-pointer"
+              onMouseEnter={() => handleMouseEnter("services")}
+              onMouseLeave={() => handleMouseLeave("services")}
+            >
+              <span>Services</span>
+              {activeDropdown === "services" && (
+                <ul className="absolute top-8 left-0 bg-white text-black rounded shadow py-2 w-52">
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/engineering-consultancy")}
+                  >
+                    Engineering Consultancy
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/mechanical-fabrication")}
+                  >
+                    Mechanical Fabrication
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() =>
+                      handleNavigation("/installation-and-commissioning")
+                    }
+                  >
+                    Installation & Commissioning
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() =>
+                      handleNavigation("/plc-software-programming")
+                    }
+                  >
+                    PLC Software Programming
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/repair-electronics")}
+                  >
+                    Repair Electronics
+                  </li>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleNavigation("/engineering-services")}
+                  >
+                    Engineering Services
                   </li>
                 </ul>
               )}
@@ -271,6 +344,89 @@ const Header: React.FC<HeaderProps> = () => {
                       }
                     >
                       VP Instruments
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation(
+                          "https://www.siemens.com/global/en.html"
+                        )
+                      }
+                    >
+                      Siemens PLC Card
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation(
+                          "https://www.siemens.com/global/en.html"
+                        )
+                      }
+                    >
+                      Servo Motor/Drive
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("https://www.ab.com/")}
+                    >
+                      Allen Bradley
+                    </li>
+                  </ul>
+                )}
+              </li>
+              <li>
+                <button
+                  className="flex items-center justify-between w-full hover:text-[#0fbbea] transition-colors"
+                  onClick={() => toggleDropdown("services")}
+                >
+                  <span>Services</span>
+                  <FiChevronDown className="ml-2" />
+                </button>
+                {activeDropdown === "services" && (
+                  <ul className="mt-2 py-2 w-full">
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation("/engineering-consultancy")
+                      }
+                    >
+                      Engineering Consultancy
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation("/mechanical-fabrication")
+                      }
+                    >
+                      Mechanical Fabrication
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation("/installation-and-commissioning")
+                      }
+                    >
+                      Installation & Commissioning
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() =>
+                        handleNavigation("/plc-software-programming")
+                      }
+                    >
+                      PLC Software Programming
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/repair-electronics")}
+                    >
+                      Repair Electronics
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-100 hover:text-[#0fbbea] cursor-pointer"
+                      onClick={() => handleNavigation("/engineering-services")}
+                    >
+                      Engineering Services
                     </li>
                   </ul>
                 )}
