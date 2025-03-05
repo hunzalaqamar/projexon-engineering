@@ -3,31 +3,31 @@ import CountUp from "react-countup";
 
 const timelineData = [
   {
-    year: "1980",
+    year: "2018",
     title: "Foundation",
     description:
       "The early beginnings of our company, focusing on innovative engineering solutions.",
   },
   {
-    year: "1984",
+    year: "2021",
     title: "Country-Level Expansion",
     description:
       "Opened multiple offices worldwide, establishing a global footprint in industrial services.",
   },
   {
-    year: "1989",
+    year: "2022",
     title: "Breakthrough Technology",
     description:
       "Launched a series of advanced automation products, revolutionizing the industry.",
   },
   {
-    year: "2003",
+    year: "2023",
     title: "Sustainable Initiatives",
     description:
       "Adopted eco-friendly processes, emphasizing long-term sustainability and responsible engineering.",
   },
   {
-    year: "2023",
+    year: "2025",
     title: "Modern Integration",
     description:
       "Integrated AI-driven solutions for next-level efficiency, cementing our position as an industry leader.",

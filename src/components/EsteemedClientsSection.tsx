@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 const clientLogos = [
   "/assets/nipponpaint.png",
-  "/assets/goplogo.png",
   "/assets/cocacola.png",
   "/assets/pepsico.png",
   "/assets/unilever.png",

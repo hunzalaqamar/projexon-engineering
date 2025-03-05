@@ -26,13 +26,9 @@ const VisionMissionSection = () => {
                 </h3>
               </div>
               <p className="text-gray-800 text-lg leading-relaxed">
-                To be a global leader in engineering innovation, driving
-                transformative solutions that empower industries to thrive in a
-                sustainable, automated, and efficient future. We envision a
-                world where precision engineering, powered by cutting-edge
-                technologies like Siemens PLCs, Allen Bradley systems, and MAC
-                Valves, sets new standards for excellence and environmental
-                responsibility.
+                To be deeply devoted to pursuing business and financial success
+                while creating a positive, lasting impact on the world around
+                you.
               </p>
             </div>
           </motion.div>
@@ -54,14 +50,14 @@ const VisionMissionSection = () => {
                 </h3>
               </div>
               <p className="text-gray-800 text-lg leading-relaxed">
-                To deliver world-class engineering services, products, and
-                solutions that enhance industrial efficiency, safety, and
-                sustainability. At Projexon Engineering, we are committed to
-                providing expert consultancy, precision fabrication, and
-                advanced automation through PISCO Pneumatics, VP Instruments,
-                and other innovative technologies, while fostering collaboration
-                and continuous improvement for our clients across diverse
-                industries.
+                To become Pakistan's premier contracting company, wholeheartedly
+                dedicated to delighting our customers. At Projexon, we aim to
+                unlock greater financial prosperity while fostering a nurturing
+                environment where our employees can thrive, grow, and find
+                fulfillment. With unwavering commitment to honesty, reliability,
+                and integrity, we embrace cutting-edge technologies and
+                industry-leading practices to deliver innovative solutions that
+                empower our clients to succeed in today’s dynamic marketplace.
               </p>
             </div>
           </motion.div>

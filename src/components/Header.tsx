@@ -70,7 +70,7 @@ const Header: React.FC<HeaderProps> = () => {
           </div>
 
           {/* Desktop Menu */}
-          <ul className="hidden lg:flex space-x-6 text-black font-medium">
+          <ul className="hidden xl:flex space-x-6 text-black font-medium">
             <li
               className="hover:text-[#0fbbea] transition-colors cursor-pointer"
               onClick={() => handleNavigation("/")}
@@ -263,12 +263,6 @@ const Header: React.FC<HeaderProps> = () => {
                 </ul>
               )}
             </li>
-            <li
-              className="hover:text-[#0fbbea] transition-colors cursor-pointer"
-              onClick={() => handleNavigation("/contact-us")}
-            >
-              <span>Contact Us</span>
-            </li>
           </ul>
 
           <div className="flex items-center space-x-4">
@@ -279,7 +273,7 @@ const Header: React.FC<HeaderProps> = () => {
               Let's Talk
             </button>
             <button
-              className="text-black text-2xl lg:hidden rounded-lg"
+              className="text-black text-2xl xl:hidden rounded-lg"
               onClick={toggleNav}
               aria-label="Toggle Navigation"
             >
@@ -289,7 +283,7 @@ const Header: React.FC<HeaderProps> = () => {
         </nav>
 
         {navOpen && (
-          <div className="lg:hidden bg-white text-black">
+          <div className="xl:hidden bg-white text-black">
             <ul className="flex flex-col space-y-4 p-4">
               <li
                 className="hover:text-[#0fbbea] transition-colors cursor-pointer"
@@ -498,12 +492,6 @@ const Header: React.FC<HeaderProps> = () => {
                     </li>
                   </ul>
                 )}
-              </li>
-              <li
-                className="hover:text-[#0fbbea] transition-colors cursor-pointer"
-                onClick={() => handleNavigation("/contact-us")}
-              >
-                <span>Contact Us</span>
               </li>
             </ul>
           </div>
