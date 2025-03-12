@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 ">
-      <div className="bg-white ml-5 mr-5 lg:ml-36 lg:mr-36 rounded-bl-2xl rounded-br-2xl border-2 border-gray-300 shadow-lg">
+      <div className="bg-white  border-2 border-gray-300 shadow-lg">
         <nav className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
           {/* Logo / Brand */}
           <div
